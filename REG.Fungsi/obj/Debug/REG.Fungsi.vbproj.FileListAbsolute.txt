@@ -1,0 +1,23 @@
+D:\PROGRAM VB\DS-Projek\REG.Fungsi\bin\Debug\REG.Fungsi.dll
+D:\PROGRAM VB\DS-Projek\REG.Fungsi\bin\Debug\REG.Fungsi.pdb
+D:\PROGRAM VB\DS-Projek\REG.Fungsi\bin\Debug\REG.Fungsi.xml
+D:\PROGRAM VB\DS-Projek\REG.Fungsi\bin\Debug\MySql.Data.dll
+D:\PROGRAM VB\DS-Projek\REG.Fungsi\obj\Debug\REG.Fungsi.vbproj.AssemblyReference.cache
+D:\PROGRAM VB\DS-Projek\REG.Fungsi\obj\Debug\REG.Fungsi.Resources.resources
+D:\PROGRAM VB\DS-Projek\REG.Fungsi\obj\Debug\REG.Fungsi.vbproj.GenerateResource.cache
+D:\PROGRAM VB\DS-Projek\REG.Fungsi\obj\Debug\REG.Fungsi.vbproj.CoreCompileInputs.cache
+D:\PROGRAM VB\DS-Projek\REG.Fungsi\obj\Debug\REG.Fungsi.vbproj.CopyComplete
+D:\PROGRAM VB\DS-Projek\REG.Fungsi\obj\Debug\REG.Fungsi.dll
+D:\PROGRAM VB\DS-Projek\REG.Fungsi\obj\Debug\REG.Fungsi.xml
+D:\PROGRAM VB\DS-Projek\REG.Fungsi\obj\Debug\REG.Fungsi.pdb
+C:\Dadan\VB\REG2.Fungsi\REG.Fungsi\bin\Debug\REG.Fungsi.dll
+C:\Dadan\VB\REG2.Fungsi\REG.Fungsi\bin\Debug\REG.Fungsi.pdb
+C:\Dadan\VB\REG2.Fungsi\REG.Fungsi\bin\Debug\REG.Fungsi.xml
+C:\Dadan\VB\REG2.Fungsi\REG.Fungsi\obj\Debug\REG.Fungsi.vbproj.AssemblyReference.cache
+C:\Dadan\VB\REG2.Fungsi\REG.Fungsi\obj\Debug\REG.Fungsi.Resources.resources
+C:\Dadan\VB\REG2.Fungsi\REG.Fungsi\obj\Debug\REG.Fungsi.vbproj.GenerateResource.cache
+C:\Dadan\VB\REG2.Fungsi\REG.Fungsi\obj\Debug\REG.Fungsi.vbproj.CoreCompileInputs.cache
+C:\Dadan\VB\REG2.Fungsi\REG.Fungsi\obj\Debug\REG.Fungsi.vbproj.CopyComplete
+C:\Dadan\VB\REG2.Fungsi\REG.Fungsi\obj\Debug\REG.Fungsi.dll
+C:\Dadan\VB\REG2.Fungsi\REG.Fungsi\obj\Debug\REG.Fungsi.xml
+C:\Dadan\VB\REG2.Fungsi\REG.Fungsi\obj\Debug\REG.Fungsi.pdb
