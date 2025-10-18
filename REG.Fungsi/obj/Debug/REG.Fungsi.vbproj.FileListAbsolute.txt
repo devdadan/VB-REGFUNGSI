@@ -21,3 +21,28 @@ C:\Dadan\VB\REG2.Fungsi\REG.Fungsi\obj\Debug\REG.Fungsi.vbproj.CopyComplete
 C:\Dadan\VB\REG2.Fungsi\REG.Fungsi\obj\Debug\REG.Fungsi.dll
 C:\Dadan\VB\REG2.Fungsi\REG.Fungsi\obj\Debug\REG.Fungsi.xml
 C:\Dadan\VB\REG2.Fungsi\REG.Fungsi\obj\Debug\REG.Fungsi.pdb
+D:\VB\REG2.Fungsi\REG.Fungsi\bin\Debug\REG.Fungsi.dll
+D:\VB\REG2.Fungsi\REG.Fungsi\bin\Debug\REG.Fungsi.pdb
+D:\VB\REG2.Fungsi\REG.Fungsi\bin\Debug\REG.Fungsi.xml
+D:\VB\REG2.Fungsi\REG.Fungsi\obj\Debug\REG.Fungsi.vbproj.AssemblyReference.cache
+D:\VB\REG2.Fungsi\REG.Fungsi\obj\Debug\REG.Fungsi.Resources.resources
+D:\VB\REG2.Fungsi\REG.Fungsi\obj\Debug\REG.Fungsi.vbproj.GenerateResource.cache
+D:\VB\REG2.Fungsi\REG.Fungsi\obj\Debug\REG.Fungsi.vbproj.CoreCompileInputs.cache
+D:\VB\REG2.Fungsi\REG.Fungsi\obj\Debug\REG.Fungsi.vbproj.CopyComplete
+D:\VB\REG2.Fungsi\REG.Fungsi\obj\Debug\REG.Fungsi.dll
+D:\VB\REG2.Fungsi\REG.Fungsi\obj\Debug\REG.Fungsi.xml
+D:\VB\REG2.Fungsi\REG.Fungsi\obj\Debug\REG.Fungsi.pdb
+D:\VB\REG2.Fungsi Net 4\REG.Fungsi\bin\Debug\REG.Fungsi.dll
+D:\VB\REG2.Fungsi Net 4\REG.Fungsi\bin\Debug\REG.Fungsi.pdb
+D:\VB\REG2.Fungsi Net 4\REG.Fungsi\bin\Debug\REG.Fungsi.xml
+D:\VB\REG2.Fungsi Net 4\REG.Fungsi\bin\Debug\Newtonsoft.Json.dll
+D:\VB\REG2.Fungsi Net 4\REG.Fungsi\bin\Debug\Newtonsoft.Json.xml
+D:\VB\REG2.Fungsi Net 4\REG.Fungsi\obj\Debug\REG.Fungsi.vbproj.AssemblyReference.cache
+D:\VB\REG2.Fungsi Net 4\REG.Fungsi\obj\Debug\REG.Fungsi.Form1.resources
+D:\VB\REG2.Fungsi Net 4\REG.Fungsi\obj\Debug\REG.Fungsi.Resources.resources
+D:\VB\REG2.Fungsi Net 4\REG.Fungsi\obj\Debug\REG.Fungsi.vbproj.GenerateResource.cache
+D:\VB\REG2.Fungsi Net 4\REG.Fungsi\obj\Debug\REG.Fungsi.vbproj.CoreCompileInputs.cache
+D:\VB\REG2.Fungsi Net 4\REG.Fungsi\obj\Debug\REG.Fungsi.vbproj.CopyComplete
+D:\VB\REG2.Fungsi Net 4\REG.Fungsi\obj\Debug\REG.Fungsi.dll
+D:\VB\REG2.Fungsi Net 4\REG.Fungsi\obj\Debug\REG.Fungsi.xml
+D:\VB\REG2.Fungsi Net 4\REG.Fungsi\obj\Debug\REG.Fungsi.pdb

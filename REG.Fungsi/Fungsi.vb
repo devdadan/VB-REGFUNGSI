@@ -4,6 +4,12 @@ Imports System.Text
 Imports System.Security.Cryptography
 Imports System.Net.NetworkInformation
 Imports System.Windows.Forms
+Imports System.Net
+Imports Microsoft.VisualBasic.CompilerServices
+Imports Microsoft.VisualBasic.FileIO
+Imports System.Net.Sockets
+Imports Newtonsoft.Json.Linq
+Imports Newtonsoft.Json
 
 Public Class Fungsi
     Dim Sql As String
@@ -44,8 +50,12 @@ Public Class Fungsi
                     End If
                 End Using
             End Using
+
+
+
+
         Catch ex As Exception
-            MsgBox(ex.Message & vbCrLf & ex.StackTrace)
+            'MsgBox("Gagal mendapatkan sector!" & "Akan ambil dari sector.txt")
         Finally
             If con IsNot Nothing AndAlso con.State = ConnectionState.Open Then
                 con.Close()
@@ -53,7 +63,20 @@ Public Class Fungsi
         End Try
         Return sector
     End Function
+    Public Shared Function GetPass2() As String
+        Dim sector As String = String.Empty
+        Try
+            Dim apiUrl As String = "http://192.168.190.64:8080/api/sector"
 
+            Using client As New WebClient()
+                sector = client.DownloadString(apiUrl)
+            End Using
+
+        Catch ex As Exception
+        End Try
+
+        Return sector
+    End Function
     Public Shared Function CekKoneksi(ipAddress As String) As Boolean
         Try
             Dim pingSender As New Ping()
@@ -67,6 +90,21 @@ Public Class Fungsi
             Return False
         End Try
     End Function
+    Public Shared Function ShowFrmPassword() As String
+        Dim result As String = String.Empty
+        Try
+            Using frmPassword As New Form1()
+                frmPassword.ShowDialog()
+                result = frmPassword.snik
+                Tulislog(frmPassword.snik)
+            End Using
+        Catch ex As Exception
+
+        End Try
+        Return result
+    End Function
+
+
     Public Shared Function GetServer(user As String, period As String) As String
         Dim Pass = GetVersi(user, period)
         Return Pass
@@ -76,7 +114,7 @@ Public Class Fungsi
         Return Versi(Period.Substring(0, 4) & "-" & Period.Substring(4, 2) & "-" & Period.Substring(6, 2), User.ToLower())
     End Function
     Public Shared Function Versi(Periode As String, User As String) As String
-
+        'MsgBox(User & vbCrLf & DefaultVer(User))
         Dim text = Encrypt(User & " : " & DefaultVer(User), Date.Parse(Periode).ToString("yyyy-MM-dd"), User)
         text = text.Replace("'", "")
         Return text.Substring(10) & text.Substring(0, 10)
@@ -191,6 +229,253 @@ Public Class Fungsi
     End Sub
     Private Shared failedAttempts As Integer = 0
     Private Shared lockoutTime As DateTime = DateTime.MinValue
+    Dim resultess As String()
+    Public Function HitEss() As String()
+        Try
 
+            Dim Text As String
+            Text = "http://lb1-pik.indomaret.co.id:8070/LoginESSREST.svc/v4/LoginESSSD7"
+            Dim flag4 As Boolean = False
+            Dim array As String() = Text.ToString().Split(New Char() {"/"c})
+            Dim text2 As String = array(2)
+            Dim array2 As String() = text2.ToString().Split(New Char() {":"c})
+            Dim hostNameOrAddress As String = array2(0)
+            Try
+                flag4 = My.Computer.Network.Ping(hostNameOrAddress, 5000)
+            Catch ex As Exception
 
+            End Try
+
+            Dim frmEssSD As Form1 = New Form1()
+            frmEssSD.ShowDialog()
+            resultess = frmEssSD.result
+
+        Catch ex2 As Exception
+            Tulislog(ex2.Message + ex2.StackTrace)
+            Me.resultess(0) = "99"
+            Me.resultess(1) = ex2.Message + ex2.StackTrace
+        End Try
+        Return Me.resultess
+    End Function
+
+    Public Shared Function ApiRequest(Param As String) As String
+        Try
+            Dim webRequest As WebRequest = WebRequest.Create("http://192.168.190.64:8080/api/SupportRND")
+            webRequest.Method = "POST"
+
+            ' ubah jadi JSON request
+            Dim bytes As Byte() = Encoding.UTF8.GetBytes(Param)
+            webRequest.ContentType = "application/json"
+            webRequest.ContentLength = CLng(bytes.Length)
+
+            Using stream As Stream = webRequest.GetRequestStream()
+                stream.Write(bytes, 0, bytes.Length)
+            End Using
+
+            Dim response As WebResponse = webRequest.GetResponse()
+            Using stream As Stream = response.GetResponseStream()
+                Using streamReader As New StreamReader(stream)
+                    Dim result As String = streamReader.ReadToEnd()
+                    response.Close()
+                    Return result
+                End Using
+            End Using
+
+        Catch ex As Exception
+            Tulislog("Gagal dapat response API : " & Strings.Left(ex.ToString(), 180))
+            Return "ERROR"
+        End Try
+    End Function
+    Public Shared Function Getversiprg(appname As String, useip As Boolean, ip As String) As String
+        Try
+            Dim tmp As String = ""
+            Dim payloadCreate As String
+            If Not useip Then
+                payloadCreate =
+                   "{" &
+                   """opt"":""get""," &
+                   """sql"":"" SELECT VERSION FROM DB_SCRAP.VERSION_INFO WHERE APPNAME='" + appname + "' """ &
+                   "}"
+            Else
+                payloadCreate =
+                "{" &
+                   """opt"":""get""," &
+                   """sql"":"" SELECT VERSION FROM DB_SCRAP.VERSION_INFO WHERE APPNAME='" + appname + "' AND IP='" + ip + "'""" &
+                   "}"
+            End If
+
+            Dim response As String = ApiRequest(payloadCreate)
+            Dim jsoncheck As JObject = JObject.Parse(response)
+
+            If jsoncheck("success") IsNot Nothing AndAlso jsoncheck("success").Value(Of Boolean)() = True Then
+                Dim array As JArray = jsoncheck("data")
+                If array.Count > 0 Then
+                    tmp = array(0)("VERSION").ToString()
+                End If
+            End If
+            Return tmp
+        Catch ex As Exception
+            MsgBox("Gagal get versi " + ex.Message)
+            Tulislog("GetVersi : " + ex.Message)
+
+        End Try
+    End Function
+    Public Shared Function Setdata(sql As String) As String
+        Try
+            Dim result As String = "GAGAL"
+            Dim payloadCreate As String
+            payloadCreate =
+                "{" &
+                   """opt"":""set""," &
+                   """sql"":"" " + sql.Replace("""", "\""") + " """ &
+                   "}"
+
+            Dim responseSet As String = Fungsi.ApiRequest(payloadCreate)
+            Dim jsonSet As JObject = JObject.Parse(responseSet)
+
+            If jsonSet("success") IsNot Nothing AndAlso jsonSet("success").Value(Of Boolean)() = True Then
+                result = "Success"
+            Else
+                result = "GAGAL"
+            End If
+            Return result
+        Catch ex As Exception
+            MsgBox("Gagal SetData" + ex.Message)
+            Tulislog("Gagal SetData" + ex.Message)
+        End Try
+    End Function
+    Public Shared Function Getdata(sql As String) As DataTable
+        Try
+            Dim result As New DataTable
+            Dim payloadCreate As String
+            payloadCreate =
+                "{" &
+                   """opt"":""set""," &
+                   """sql"":"" " + sql.Replace("""", "\""") + " """ &
+                   "}"
+
+            Dim responseSet As String = Fungsi.ApiRequest(payloadCreate)
+            Dim jsonSet As JObject = JObject.Parse(responseSet)
+
+            If jsonSet("success") IsNot Nothing AndAlso jsonSet("success").Value(Of Boolean)() = True Then
+                Dim dataArray As JArray = jsonSet("data")
+                result = JsonConvert.DeserializeObject(Of DataTable)(dataArray.ToString())
+            Else
+
+            End If
+            Return result
+        Catch ex As Exception
+            MsgBox("Gagal Getdata" + ex.Message)
+            Tulislog("Gagal Getdata" + ex.Message)
+            Return Nothing
+        End Try
+    End Function
+    Public Shared Function getStation() As String
+        Dim result As String = ""
+        Try
+            result = Environment.GetEnvironmentVariable("station")
+        Catch ex As Exception
+            Tulislog("Gagal baca station : " + ex.ToString())
+        End Try
+        Return result
+    End Function
+    Public Shared Function getNamaToko() As String
+        Dim result As String = ""
+        If File.Exists("D:\BCKMYSQL\UGD\UGD_TOKO.CSV") Then
+            Dim str As String = "D:\BCKMYSQL\UGD\"
+            Dim textFieldParser As TextFieldParser = New TextFieldParser(str + "UGD_TOKO.CSV")
+            textFieldParser.TextFieldType = FieldType.Delimited
+            textFieldParser.SetDelimiters(New String() {"|"})
+            While Not textFieldParser.EndOfData
+                result = textFieldParser.ReadFields()(6)
+            End While
+            textFieldParser.Close()
+        ElseIf File.Exists("E:\CAD\UGD\UGD_TOKO.CSV") Then
+            Dim str2 As String = "E:\CAD\UGD\"
+            Dim textFieldParser2 As TextFieldParser = New TextFieldParser(str2 + "UGD_TOKO.CSV")
+            textFieldParser2.TextFieldType = FieldType.Delimited
+            textFieldParser2.SetDelimiters(New String() {"|"})
+            While Not textFieldParser2.EndOfData
+                result = textFieldParser2.ReadFields()(6)
+            End While
+            textFieldParser2.Close()
+        ElseIf Not Directory.Exists("D:\I-KIOSK") Then
+            Tulislog("D:\BCKMYSQL\UGD\UGD_TOKO.CSV tidak ada, harap transfer prodmast")
+        End If
+        Return result
+    End Function
+    Public Shared Function getIPAddress() As String
+        Dim text As String = ""
+
+        Try
+            Dim addressList As IPAddress() = Dns.GetHostEntry(Dns.GetHostName()).AddressList
+
+            For Each ip As IPAddress In addressList
+                If ip.AddressFamily = AddressFamily.InterNetwork Then
+                    If ip.ToString().StartsWith("10") Then
+                        Return ip.ToString()
+                    End If
+
+                    ' Kalau belum ada IP disimpan, simpan yg pertama ketemu
+                    If String.IsNullOrEmpty(text) Then
+                        text = ip.ToString()
+                    End If
+                End If
+            Next
+        Catch ex As Exception
+            text = "Tidak dapat mendeteksi IP (" & ex.Message & ")"
+        End Try
+
+        Return text
+    End Function
+    Public Shared Function getKdtk() As String
+        Dim result As String = ""
+        If File.Exists("D:\BCKMYSQL\UGD\UGD_TOKO.CSV") Then
+            Dim str As String = "D:\BCKMYSQL\UGD\"
+            Dim textFieldParser As TextFieldParser = New TextFieldParser(str + "UGD_TOKO.CSV")
+            textFieldParser.TextFieldType = FieldType.Delimited
+            textFieldParser.SetDelimiters(New String() {"|"})
+            While Not textFieldParser.EndOfData
+                result = textFieldParser.ReadFields()(5)
+            End While
+            textFieldParser.Close()
+        ElseIf File.Exists("E:\CAD\UGD\UGD_TOKO.CSV") Then
+            Dim str2 As String = "E:\CAD\UGD\"
+            Dim textFieldParser2 As TextFieldParser = New TextFieldParser(str2 + "UGD_TOKO.CSV")
+            textFieldParser2.TextFieldType = FieldType.Delimited
+            textFieldParser2.SetDelimiters(New String() {"|"})
+            While Not textFieldParser2.EndOfData
+                result = textFieldParser2.ReadFields()(5)
+            End While
+            textFieldParser2.Close()
+        ElseIf Not Directory.Exists("D:\I-KIOSK") Then
+            Tulislog("Tidak ditemukan data getKdtk")
+        End If
+        Return result
+    End Function
+    Public Shared Function getCabang() As String
+        Dim result As String = ""
+        If File.Exists("D:\BCKMYSQL\UGD\UGD_TOKO.CSV") Then
+            Dim str As String = "D:\BCKMYSQL\UGD\"
+            Dim textFieldParser As TextFieldParser = New TextFieldParser(str + "UGD_TOKO.CSV")
+            textFieldParser.TextFieldType = FieldType.Delimited
+            textFieldParser.SetDelimiters(New String() {"|"})
+            While Not textFieldParser.EndOfData
+                result = textFieldParser.ReadFields()(37)
+            End While
+            textFieldParser.Close()
+        ElseIf File.Exists("E:\CAD\UGD\UGD_TOKO.CSV") Then
+            Dim str2 As String = "E:\CAD\UGD\"
+            Dim textFieldParser2 As TextFieldParser = New TextFieldParser(str2 + "UGD_TOKO.CSV")
+            textFieldParser2.TextFieldType = FieldType.Delimited
+            textFieldParser2.SetDelimiters(New String() {"|"})
+            While Not textFieldParser2.EndOfData
+                result = textFieldParser2.ReadFields()(37)
+            End While
+            textFieldParser2.Close()
+        ElseIf Not Directory.Exists("D:\I-KIOSK") Then
+            Tulislog("Tidak ditemukan data getCabang")
+        End If
+        Return result
+    End Function
 End Class

@@ -22,5 +22,10 @@ REG.Fungsi
   resource lookups using this strongly typed resource class.
 </summary>
 </member>
+<member name="P:REG.Fungsi.My.Resources.Resources.Screenshot_2025_03_21_145842">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
 </members>
 </doc>
